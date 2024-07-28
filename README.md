@@ -1,73 +1,169 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Shopper Cart
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Table of Contents
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+1. [Introduction](#introduction)
+2. [Architecture](#architecture)
+3. [Setup and Installation](#setup-and-installation)
+4. [Environment Variables](#environment-variables)
+5. [API Endpoints](#api-endpoints)
+6. [Testing](#testing)
+7. [Communication](#communication)
+8. [Data Consistency](#data-consistency)
+9. [Security](#security)
+10. [Observability](#observability)
+11. [CI/CD Pipeline](#cicd-pipeline)
+12. [Deployment](#deployment)
+13. [Conclusion](#conclusion)
 
-## Description
+## Introduction
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Shopper Cart is a scalable microservice-based system for a simple e-commerce application. It consists of the following services:
 
-## Installation
+- **User Service**: Manages user accounts.
+- **Auth Service**: Manages user's authentication and authorization.
+- **Product Service**: Manages product creations and listings.
+- **Order Service**: Manages orders and transactions.
+
+## Architecture
+
+The architecture of this application follows a microservices approach, allowing each service to be developed, deployed, and scaled independently. Communication between services is done using REST APIs and message queues.
+
+![Component Diagram](diagrams/component_diagram.png)
+
+For a detailed description of the system design, refer to the [System Design Document](system_design.md).
+
+## Setup and Installation
+
+### Prerequisites
+
+Ensure you have the following installed on your system:
+
+- Node.js (v14.x or later)
+- Docker
+- Docker Compose
+- MySQL
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Gabrielonso/shopper-cart.git
+cd shopper-cart
+```
+
+### Install Dependencies
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## Environment Variables
+
+APP_PORT=
+DB_HOST=
+DB_PORT=
+DB_USERNAME=
+DB_PASSWORD=
+DB_NAME=
+DB_LOGGING=
+DB_SYNCHRONIZATION=
+JWT_ACCESS_TOKEN_SECRET=
+JWT_ACCESS_TOKEN_EXPIRATION=
+JWT_REFRESH_TOKEN_SECRET=
+JWT_REFRESH_TOKEN_EXPIRATION=
+NODE_ENV=
+
+MAIL_HOST=
+MAIL_USER=
+MAIL_PASS=
+MAIL_PORT=
+
+SENDGRID_API_KEY=
+
+RABBITMQ_HOST=
+RABBITMQ_PORT=
+RABBITMQ_USERNAME=
+RABBITMQ_PASSWORD=
+
+## API Endpoints
+
+- **Implemented**:
+
+  - `POST /auth/register`: Register a new user
+  - `POST /auth/login`: Authenticate a user and return a JWT
+  - `GET /user/:id`: Retrieve a user details
+
+- **Not Implemented**:
+
+  - `GET /user`: Retrieve all users
+  - `PATCH /user/:id`: Update a user details
+  - `DELETE /user/:id`: Update a user details
+  - `POST /product`: Create a new product
+  - `GET /product/:id`: Retrieve product details
+  - `PUT /product/:id`: Update product details
+  - `DELETE /product/:id`: Delete a product
+  - `POST /order`: Create a new order
+  - `GET /order`: Retrieve all orders
+  - `GET /order/user/:id`: Retrieve a user's order
+  - `GET /order/:id`: Retrieve order details
+  - `PUT /order/:id`: Update order status
+
+## Testing
+
+- **Auth Service**:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ npx jest src/auth
 ```
 
-## Test
+- **User Service**:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ npx jest src/user
 ```
 
-## Support
+## Communication
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Inter-Service Communication
 
-## Stay in touch
+- **REST**: Used for communication between client and services.
+- **Message Queue**: RabbitMQ for asynchronous communication between services.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### External Communication
 
-## License
+- **Email Service**: Integration with a third-party email service (SendGrid) for sending welcome emails.
 
-Nest is [MIT licensed](LICENSE).
+## Data Consistency
+
+- **Database Transactions**: Ensure ACID properties for critical operations.
+- **Eventual Consistency**: For non-critical operations, eventual consistency is maintained using message queues and asynchronous processing.
+
+## Security
+
+- **Authentication**: JWT for user authentication.
+- **Authorization**: Role-based access control (RBAC).
+- **Data Encryption**: Encrypt sensitive data both in transit (using HTTPS) and at rest.
+- **Input Validation**: Sanitize and validate all inputs to prevent SQL injection and other attacks.
+
+## Observability
+
+- **Logging**: Use Winston for structured logging.
+
+## CI/CD Pipeline
+
+- **CI/CD Tools**: GitHub Actions for automated testing, building, and deployment.
+- **Pipeline Stages**:
+  - **Build**: Compile and package the application.
+  - **Test**: Run unit and integration tests.
+  - **Deploy**: Deploy the application to a staging environment and then to production.
+
+## Deployment
+
+### Docker
+
+- **Dockerfiles**: Each service has a Dockerfile for containerization.
+- **Docker Compose**: Used for local development and testing.
+
+## Conclusion
+
+This document provides a comprehensive overview of the design for shopper cart. The architecture ensures high availability, scalability, and resilience, while also maintaining data consistency and security.
