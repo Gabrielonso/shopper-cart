@@ -59,6 +59,7 @@ $ npm install
 
 ## Environment Variables
 
+```bash
 APP_PORT=
 DB_HOST=
 DB_PORT=
@@ -84,6 +85,8 @@ RABBITMQ_HOST=
 RABBITMQ_PORT=
 RABBITMQ_USERNAME=
 RABBITMQ_PASSWORD=
+
+```
 
 ## API Endpoints
 
