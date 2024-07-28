@@ -1,8 +1,36 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { HttpExceptionFilter } from './auth/global-filters/http-exception.filter';
+import { AllExceptionsFilter } from './auth/global-filters/all-exception.filter';
+import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: ['amqp://localhost:5672'],
+      queue: 'emails',
+      queueOptions: {
+        durable: false,
+      },
+    },
+  });
+  app.startAllMicroservices();
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('APP_PORT');
+  const httpAdapterHost = app.get(HttpAdapterHost);
+  app.useGlobalFilters(
+    new HttpExceptionFilter(configService),
+    new AllExceptionsFilter(httpAdapterHost),
+  );
+  await app.listen(port);
 }
 bootstrap();
