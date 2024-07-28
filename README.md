@@ -29,7 +29,7 @@ Shopper Cart is a scalable microservice-based system for a simple e-commerce app
 
 The architecture of this application follows a microservices approach, allowing each service to be developed, deployed, and scaled independently. Communication between services is done using REST APIs and message queues.
 
-![Component Diagram](diagrams/system_design_diagram.png)
+![Component Diagram](diagrams/component_design.png)
 
 For a detailed description of the system design, refer to the [System Design Document](system_design.md).
 
