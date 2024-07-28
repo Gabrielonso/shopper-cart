@@ -25,8 +25,9 @@ export class MailService {
   // }
 
   async sendWelcomeEmail(email: string) {
+    console.log('<<>>', email);
     const job = await this.emailQueue.add('sendWelcomeEmail', { email });
-
+    console.log(job, email);
     return { jobId: job.id };
   }
 }

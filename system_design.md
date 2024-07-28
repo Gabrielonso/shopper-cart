@@ -8,7 +8,7 @@ This document outlines the design of shopper cart, a scalable microservice-based
 
 ### 2.1 Architecture Diagram
 
-![Component Diagram](diagrams/component_diagram.png)
+![Component Diagram](diagrams/system_design_diagram.png)
 
 ### 2.2 Microservices
 

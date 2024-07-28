@@ -7,6 +7,7 @@ export class EmailProcessor {
   constructor(private readonly sendGridClient: SendGridClient) {}
   @Process('sendWelcomeEmail')
   async handleSendEmail(job: Job) {
+    console.log('send email');
     const { email } = job.data;
     const msg = {
       to: email,
