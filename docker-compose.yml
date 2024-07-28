@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  easy-cart-dev:
+  shoppers-cart-app-dev:
     build:
       context: .
       dockerfile: Dockerfile

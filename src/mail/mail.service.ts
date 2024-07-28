@@ -13,7 +13,7 @@ export class MailService {
 
   // async sendWelcomeEmail(
   //   recipient: string,
-  //   body = 'Welcome to Easy Cart',
+  //   body = 'Welcome to Shopper Cart',
   // ): Promise<void> {
   //   const mail: MailDataRequired = {
   //     to: recipient,
